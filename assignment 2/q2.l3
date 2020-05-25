@@ -1,0 +1,71 @@
+
+(define empty?
+    (lambda(lst)
+    (if (pair? lst) #f #t)
+    )
+)
+
+(define sum_of_power_digits 
+  (lambda (lst l)
+    (if (empty? lst)
+        0
+        (+ (power (car lst) l) (sum_of_power_digits (cdr lst) l )))
+   )
+)
+
+(define narcissistic
+  (lambda(lst l num)
+    (= num (sum_of_power_digits lst l))
+   )
+)
+
+(define len
+  (lambda(lst)
+     (if (empty? lst)
+      0
+    (+ 1 (len(cdr lst))))
+   )
+)
+
+(define recursive
+  (lambda(lst l)
+    (if (empty? lst)
+        0
+        (+ (* (power 10 (- (len lst) 1)) (car lst)) (recursive (cdr lst) (- l 1))))
+   )
+)
+
+(define last-element
+   (lambda (lst)
+      (if (empty? (cdr lst))
+     (car lst)
+     (last-element (cdr lst)))
+  )
+)
+
+(define power
+    (lambda (n1 n2)
+      (if (= n2 0)1(* n1 (power n1 (- n2 1))))
+    )
+)
+
+(define sum-lst-power
+    (lambda (lst n)
+        (if (empty? lst) 0
+        (+ (power (car lst) n)
+          (sum-lst-power(cdr lst) n)))
+    )
+)
+      
+(define num-from-digits
+  (lambda (lst)
+    (recursive lst (len lst))
+  )
+)
+
+(define is-narcissistic
+  (lambda (lst)
+       (narcissistic lst (len lst) (num-from-digits lst))
+    )
+)
+ 
